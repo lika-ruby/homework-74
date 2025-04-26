@@ -1,6 +1,6 @@
 // Функція для додавання нового студента
 
-export const addStudents = (studentToAdd) => {
+export const addStudents = async (studentToAdd) => {
     const options = {
         method: "POST",
         body: JSON.stringify(studentToAdd),
@@ -9,5 +9,9 @@ export const addStudents = (studentToAdd) => {
         },
 
     };
-    fetch("http://localhost:3000/students", options)
+    try {
+        return await fetch("http://localhost:3000/students", options)
+    } catch (error) {
+        return error
+    }
 }

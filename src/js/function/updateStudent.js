@@ -1,6 +1,6 @@
 // Функція для оновлення студента
 
-export const updateStudent = (id, studentToUpdate) => {
+export const updateStudent = async (id, studentToUpdate) => {
 
     const options = {
         method: "PUT",
@@ -9,6 +9,9 @@ export const updateStudent = (id, studentToUpdate) => {
             "Content-Type": "application/json; charset=UTF-8",
         },
     };
-    fetch(`http://localhost:3000/students/${id}`, options)
-
+    try {
+        return await fetch(`http://localhost:3000/students/${id}`, options)
+    } catch (error) {
+        return error
+    }
 }

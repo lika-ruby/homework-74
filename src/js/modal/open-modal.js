@@ -1,5 +1,4 @@
 export const openModal = (backdrop, e, students, nameElem, ageElem, courseElem, skillsElem, emailElem, checkboxElem) => {
-    console.log(students)
 
     const rowElem = e.target.closest("tr");
     students.map((student) => {

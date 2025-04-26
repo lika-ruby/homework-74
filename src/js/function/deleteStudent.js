@@ -1,7 +1,11 @@
 // Функція для видалення студента
 
-export const deleteStudent = (id) => {
-    fetch(`http://localhost:3000/students/${id}`, {
-        method: "DELETE",
-    })
+export const deleteStudent = async (id) => {
+    try {
+        return await fetch(`http://localhost:3000/students/${id}`, {
+            method: "DELETE",
+        })
+    } catch (error) {
+        return error
+    }
 }

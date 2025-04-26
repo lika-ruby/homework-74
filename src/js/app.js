@@ -26,15 +26,15 @@ const backdrop = document.querySelector(".backdrop")
 const addStudentBtnModal = document.querySelector("#add-student-btn-c")
 
 
-getStudentsBtn.addEventListener("click", () => {
+getStudentsBtn.addEventListener("click", async () => {
 
-    getStudents().then((students) => {
+    await getStudents().then((students) => {
         tBodyElem.innerHTML = renderStudents(students)
     })
 
 })
 
-addStudentBtn.addEventListener("click", (e) => {
+addStudentBtn.addEventListener("click", async (e) => {
     e.preventDefault()
     const student = {
         name: addNameInput.value,
@@ -44,13 +44,10 @@ addStudentBtn.addEventListener("click", (e) => {
         email: addEmailInput.value,
         isEnrolled: addChexboxInput.checked
     }
-    console.log(student);
-    addStudents(student)
-    setTimeout(() => {
-        getStudents().then((students) => {
-            tBodyElem.innerHTML = renderStudents(students)
-        })
-    }, 100)
+    await addStudents(student)
+    await getStudents().then((students) => {
+        tBodyElem.innerHTML = renderStudents(students)
+    })
     addNameInput.value = ""
     addAgeInput.value = ""
     addCourseInput.value = ""
@@ -60,11 +57,11 @@ addStudentBtn.addEventListener("click", (e) => {
 })
 
 
-tBodyElem.addEventListener("click", (e) => {
+tBodyElem.addEventListener("click", async (e) => {
     e.preventDefault()
     if (e.target.id === "change") {
         backdrop.classList.remove("is-hidden")
-        getStudents().then((students) => {
+        await getStudents().then((students) => {
             openModal(backdrop, e, students, addNameInputModal, addAgeInputModal, addCourseInputModal, addSkillsInputModal, addEmailInputModal, addChexboxInputModal)
 
         })
@@ -72,12 +69,10 @@ tBodyElem.addEventListener("click", (e) => {
     }
     if (e.target.id === "delete") {
         const id = e.target.parentNode.parentNode.firstElementChild.textContent
-        deleteStudent(id)
-        setTimeout(() => {
-            getStudents().then((students) => {
-                tBodyElem.innerHTML = renderStudents(students)
-            })
-        }, 100)
+        await deleteStudent(id)
+        await getStudents().then((students) => {
+            tBodyElem.innerHTML = renderStudents(students)
+        })
     }
 
 })
@@ -88,7 +83,7 @@ closeBtn.addEventListener("click", () => {
 });
 
 
-addStudentBtnModal.addEventListener("click", (e) => {
+addStudentBtnModal.addEventListener("click", async (e) => {
     e.preventDefault()
     const id = backdrop.id
     const student = {
@@ -99,11 +94,9 @@ addStudentBtnModal.addEventListener("click", (e) => {
         email: addEmailInputModal.value,
         isEnrolled: addChexboxInputModal.checked
     }
-    updateStudent(id, student)
-    setTimeout(() => {
-        getStudents().then((students) => {
-            tBodyElem.innerHTML = renderStudents(students)
-        })
-    }, 100)
+    await updateStudent(id, student)
+    await getStudents().then((students) => {
+        tBodyElem.innerHTML = renderStudents(students)
+    })
     backdrop.classList.add("is-hidden");
 })
