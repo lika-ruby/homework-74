@@ -694,12 +694,12 @@ const addEmailInputModal = document.querySelector("#email-c");
 const addChexboxInputModal = document.querySelector("#checkbox-c");
 const backdrop = document.querySelector(".backdrop");
 const addStudentBtnModal = document.querySelector("#add-student-btn-c");
-getStudentsBtn.addEventListener("click", ()=>{
-    (0, _getStudents.getStudents)().then((students)=>{
+getStudentsBtn.addEventListener("click", async ()=>{
+    await (0, _getStudents.getStudents)().then((students)=>{
         tBodyElem.innerHTML = (0, _renderStudents.renderStudents)(students);
     });
 });
-addStudentBtn.addEventListener("click", (e)=>{
+addStudentBtn.addEventListener("click", async (e)=>{
     e.preventDefault();
     const student = {
         name: addNameInput.value,
@@ -709,13 +709,10 @@ addStudentBtn.addEventListener("click", (e)=>{
         email: addEmailInput.value,
         isEnrolled: addChexboxInput.checked
     };
-    console.log(student);
-    (0, _addStudent.addStudents)(student);
-    setTimeout(()=>{
-        (0, _getStudents.getStudents)().then((students)=>{
-            tBodyElem.innerHTML = (0, _renderStudents.renderStudents)(students);
-        });
-    }, 100);
+    await (0, _addStudent.addStudents)(student);
+    await (0, _getStudents.getStudents)().then((students)=>{
+        tBodyElem.innerHTML = (0, _renderStudents.renderStudents)(students);
+    });
     addNameInput.value = "";
     addAgeInput.value = "";
     addCourseInput.value = "";
@@ -723,28 +720,26 @@ addStudentBtn.addEventListener("click", (e)=>{
     addEmailInput.value = "";
     addChexboxInput.checked = false;
 });
-tBodyElem.addEventListener("click", (e)=>{
+tBodyElem.addEventListener("click", async (e)=>{
     e.preventDefault();
     if (e.target.id === "change") {
         backdrop.classList.remove("is-hidden");
-        (0, _getStudents.getStudents)().then((students)=>{
+        await (0, _getStudents.getStudents)().then((students)=>{
             (0, _openModal.openModal)(backdrop, e, students, addNameInputModal, addAgeInputModal, addCourseInputModal, addSkillsInputModal, addEmailInputModal, addChexboxInputModal);
         });
     }
     if (e.target.id === "delete") {
         const id = e.target.parentNode.parentNode.firstElementChild.textContent;
-        (0, _deleteStudent.deleteStudent)(id);
-        setTimeout(()=>{
-            (0, _getStudents.getStudents)().then((students)=>{
-                tBodyElem.innerHTML = (0, _renderStudents.renderStudents)(students);
-            });
-        }, 100);
+        await (0, _deleteStudent.deleteStudent)(id);
+        await (0, _getStudents.getStudents)().then((students)=>{
+            tBodyElem.innerHTML = (0, _renderStudents.renderStudents)(students);
+        });
     }
 });
 closeBtn.addEventListener("click", ()=>{
     backdrop.classList.add("is-hidden");
 });
-addStudentBtnModal.addEventListener("click", (e)=>{
+addStudentBtnModal.addEventListener("click", async (e)=>{
     e.preventDefault();
     const id = backdrop.id;
     const student = {
@@ -755,12 +750,10 @@ addStudentBtnModal.addEventListener("click", (e)=>{
         email: addEmailInputModal.value,
         isEnrolled: addChexboxInputModal.checked
     };
-    (0, _updateStudent.updateStudent)(id, student);
-    setTimeout(()=>{
-        (0, _getStudents.getStudents)().then((students)=>{
-            tBodyElem.innerHTML = (0, _renderStudents.renderStudents)(students);
-        });
-    }, 100);
+    await (0, _updateStudent.updateStudent)(id, student);
+    await (0, _getStudents.getStudents)().then((students)=>{
+        tBodyElem.innerHTML = (0, _renderStudents.renderStudents)(students);
+    });
     backdrop.classList.add("is-hidden");
 });
 
@@ -769,8 +762,12 @@ addStudentBtnModal.addEventListener("click", (e)=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getStudents", ()=>getStudents);
-const getStudents = ()=>{
-    return fetch("http://localhost:3000/students").then((response)=>response.json());
+const getStudents = async ()=>{
+    try {
+        return await fetch("http://localhost:3000/students").then((response)=>response.json());
+    } catch (error) {
+        return error;
+    }
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
@@ -850,7 +847,7 @@ const isChecked = (chexbox)=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "addStudents", ()=>addStudents);
-const addStudents = (studentToAdd)=>{
+const addStudents = async (studentToAdd)=>{
     const options = {
         method: "POST",
         body: JSON.stringify(studentToAdd),
@@ -858,7 +855,11 @@ const addStudents = (studentToAdd)=>{
             "Content-Type": "application/json; charset=UTF-8"
         }
     };
-    fetch("http://localhost:3000/students", options);
+    try {
+        return await fetch("http://localhost:3000/students", options);
+    } catch (error) {
+        return error;
+    }
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"lCuE6":[function(require,module,exports,__globalThis) {
@@ -866,7 +867,7 @@ const addStudents = (studentToAdd)=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "updateStudent", ()=>updateStudent);
-const updateStudent = (id, studentToUpdate)=>{
+const updateStudent = async (id, studentToUpdate)=>{
     const options = {
         method: "PUT",
         body: JSON.stringify(studentToUpdate),
@@ -874,7 +875,11 @@ const updateStudent = (id, studentToUpdate)=>{
             "Content-Type": "application/json; charset=UTF-8"
         }
     };
-    fetch(`http://localhost:3000/students/${id}`, options);
+    try {
+        return await fetch(`http://localhost:3000/students/${id}`, options);
+    } catch (error) {
+        return error;
+    }
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jo2fA":[function(require,module,exports,__globalThis) {
@@ -882,10 +887,14 @@ const updateStudent = (id, studentToUpdate)=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "deleteStudent", ()=>deleteStudent);
-const deleteStudent = (id)=>{
-    fetch(`http://localhost:3000/students/${id}`, {
-        method: "DELETE"
-    });
+const deleteStudent = async (id)=>{
+    try {
+        return await fetch(`http://localhost:3000/students/${id}`, {
+            method: "DELETE"
+        });
+    } catch (error) {
+        return error;
+    }
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"kqkQr":[function(require,module,exports,__globalThis) {
@@ -893,7 +902,6 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "openModal", ()=>openModal);
 const openModal = (backdrop, e, students, nameElem, ageElem, courseElem, skillsElem, emailElem, checkboxElem)=>{
-    console.log(students);
     const rowElem = e.target.closest("tr");
     students.map((student)=>{
         if (String(student.id) === rowElem.id) {
