@@ -2,7 +2,7 @@
 
 export const deleteStudent = async (id) => {
     try {
-        return await fetch(`https://680dfed9c47cb8074d91bfe0.mockapi.io/api/blog-project/students/${id}`, {
+        return await fetch(`https://68164d2232debfe95dbe0c40.mockapi.io/api/blog-project/students/${id}`, {
             method: "DELETE",
         })
     } catch (error) {
