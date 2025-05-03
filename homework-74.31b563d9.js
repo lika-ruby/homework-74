@@ -160,11 +160,11 @@
       });
     }
   }
-})({"5j6Kf":[function(require,module,exports,__globalThis) {
+})({"i0ivR":[function(require,module,exports,__globalThis) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
-var HMR_SERVER_PORT = 1234;
+var HMR_SERVER_PORT = 56835;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "439701173a9199ea";
 var HMR_USE_SSE = false;
@@ -764,7 +764,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getStudents", ()=>getStudents);
 const getStudents = async ()=>{
     try {
-        return await fetch("http://localhost:3000/students").then((response)=>response.json());
+        return await fetch("https://680dfed9c47cb8074d91bfe0.mockapi.io/api/blog-project/students").then((response)=>response.json());
     } catch (error) {
         return error;
     }
@@ -856,7 +856,7 @@ const addStudents = async (studentToAdd)=>{
         }
     };
     try {
-        return await fetch("http://localhost:3000/students", options);
+        return await fetch("https://680dfed9c47cb8074d91bfe0.mockapi.io/api/blog-project/students", options);
     } catch (error) {
         return error;
     }
@@ -876,7 +876,7 @@ const updateStudent = async (id, studentToUpdate)=>{
         }
     };
     try {
-        return await fetch(`http://localhost:3000/students/${id}`, options);
+        return await fetch(`https://680dfed9c47cb8074d91bfe0.mockapi.io/api/blog-project/students/${id}`, options);
     } catch (error) {
         return error;
     }
@@ -889,7 +889,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "deleteStudent", ()=>deleteStudent);
 const deleteStudent = async (id)=>{
     try {
-        return await fetch(`http://localhost:3000/students/${id}`, {
+        return await fetch(`https://680dfed9c47cb8074d91bfe0.mockapi.io/api/blog-project/students/${id}`, {
             method: "DELETE"
         });
     } catch (error) {
@@ -916,6 +916,6 @@ const openModal = (backdrop, e, students, nameElem, ageElem, courseElem, skillsE
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequireffd4", {})
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["i0ivR","a0t4e"], "a0t4e", "parcelRequireffd4", {})
 
 //# sourceMappingURL=homework-74.31b563d9.js.map
