@@ -10,7 +10,7 @@ export const addStudents = async (studentToAdd) => {
 
     };
     try {
-        return await fetch("http://localhost:3000/students", options)
+        return await fetch("https://680dfed9c47cb8074d91bfe0.mockapi.io/api/blog-project/students", options)
     } catch (error) {
         return error
     }
